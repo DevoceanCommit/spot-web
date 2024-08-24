@@ -11,21 +11,21 @@ interface VideoSummary {
 }
 
 const App: React.FC = () => {
-  const [video, setVideo] = useState<VideoSummary | null>({
+  const [video, setVideo] = useState<VideoSummary | null>({ //need api
     // 유튜브 영상 테스트 프로퍼티, api 연결시 제거
-    id: 'mbxWk7kq4IM', 
+    id: 'mbxWk7kq4IM',  //유튜브 링크 맨 뒤에 있는거
     title: 'Test Video',
     date: '2024-08-25',
     summary: 'This is a test summary.',
     contents: [
       {
-        screenshot: 'https://via.placeholder.com/150',
-        subtitle: 'Section 1',
+        screenshot: 'https://via.placeholder.com/150', //need api
+        subtitle: '소제목1',
         description: 'This is the first section description.',
       },
       {
-        screenshot: 'https://via.placeholder.com/150',
-        subtitle: 'Section 2',
+        screenshot: 'https://via.placeholder.com/150', //need api
+        subtitle: '소제목2',
         description: 'This is the second section description.',
       },
     ],
@@ -67,12 +67,12 @@ const App: React.FC = () => {
         ></iframe>
       </div>
       <div className="video-info">
-        <h1>{video.title}</h1>
-        <div className="video-meta">
+          <h1>{video.title}</h1>
           <span>{video.date}</span>
           <span className="bookmark">🔖</span>
+        <div className="video-meta">
+          <p className="summary">{video.summary}</p>
         </div>
-        <p className="summary">{video.summary}</p>
       </div>
       <div className="table-of-contents">
         <h2>Table of Contents</h2>
