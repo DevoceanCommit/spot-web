@@ -48,6 +48,13 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
+      <header className="header">
+        <button className="back-button" onClick={() => window.history.back()}> {/*안드로이드 웹뷰의 경우 이전으로 되돌아가 가기를 다시 구현해야 함*/}
+          &lt; {/* <돌아가기 표시. svg로 바꿀 예정 */}
+        </button>
+        <h1 className="header-title">Video Summary</h1>
+      </header>
+      <hr className="divider" />
       <div className="video-embed">
         <iframe
           width="100%"
