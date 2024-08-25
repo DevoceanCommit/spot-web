@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // api 연결시 사용 예정
-import icon_back from './assets/icon_back.svg';
-
+import './App.css';
+import axios from 'axios'; //api 연결시 사용 예정
+import icon_back from '.assets/icon_back.svg';
+ 
 interface VideoSummary {
   id: string;
   title: string;
@@ -11,20 +12,20 @@ interface VideoSummary {
 }
 
 const App: React.FC = () => {
-  const [video, setVideo] = useState<VideoSummary | null>({
+  const [video, setVideo] = useState<VideoSummary | null>({ //need api
     // 유튜브 영상 테스트 프로퍼티, api 연결시 제거
-    id: 'mbxWk7kq4IM',  // 유튜브 링크 맨 뒤에 있는거
+    id: 'mbxWk7kq4IM',  //유튜브 링크 맨 뒤에 있는거
     title: 'Test Video',
     date: '2024-08-25',
     summary: 'This is a test summary.',
     contents: [
       {
-        screenshot: 'https://via.placeholder.com/150', // need api
+        screenshot: 'https://via.placeholder.com/150', //need api
         subtitle: '소제목1',
         description: 'This is the first section description.',
       },
       {
-        screenshot: 'https://via.placeholder.com/150', // need api
+        screenshot: 'https://via.placeholder.com/150', //need api
         subtitle: '소제목2',
         description: 'This is the second section description.',
       },
@@ -47,15 +48,17 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-5">
-      <header className="flex items-center mb-4">
-        <button onClick={() => window.history.back()} className="mr-3">
-          <img src={icon_back} alt="Back" />
-        </button>
-        <h1 className="text-lg font-bold">Video Summary</h1>
+    <div className="container">
+      <header className="header">
+      <button onClick={() => window.history.back()}>
+        <img src={icon_back} alt="Back" /> {/* SVG로 돌아가기 버튼 대체 */}
+      </button>
+
+
+        <h1 className="header-title">Video Summary</h1>
       </header>
-      <hr className="border-0 h-px bg-gray-300 mb-5" />
-      <div className="mb-5">
+      <hr className="divider" />
+      <div className="video-embed">
         <iframe
           width="100%"
           height="315"
@@ -66,32 +69,32 @@ const App: React.FC = () => {
           allowFullScreen
         ></iframe>
       </div>
-      <div className="mb-5">
-        <h1 className="text-2xl mb-1">{video.title}</h1>
-        <div className="flex justify-between text-sm text-gray-500">
+      <div className="video-info">
+          <h1>{video.title}</h1>
           <span>{video.date}</span>
-          <span className="cursor-pointer">🔖</span>
+          <span className="bookmark">🔖</span>
+        <div className="video-meta">
+          <p className="summary">{video.summary}</p>
         </div>
-        <p className="text-base mt-3">{video.summary}</p>
       </div>
-      <div className="mb-5">
-        <h2 className="text-xl mb-2">목차</h2>
-        <ul className="list-none p-0">
+      <div className="table-of-contents">
+        <h2>Table of Contents</h2>
+        <ul>
           {video.contents.map((content, index) => (
-            <p key={index} className="mb-2">
-              <a href={`#section-${index + 1}`} className="text-blue-500 hover:underline">
+            <li key={index}>
+              <a href={`#section-${index + 1}`}>
                 {content.subtitle}
               </a>
-            </p>
+            </li>
           ))}
         </ul>
       </div>
-      <div>
+      <div className="video-sections">
         {video.contents.map((content, index) => (
-          <div key={index} id={`section-${index + 1}`} className="mb-10">
-            <img src={content.screenshot} alt={content.subtitle} className="w-full h-auto mb-3" />
-            <h3 className="text-xl mb-2">{content.subtitle}</h3>
-            <p className="text-base">{content.description}</p>
+          <div key={index} id={`section-${index + 1}`} className="section">
+            <img src={content.screenshot} alt={content.subtitle} />
+            <h3>{content.subtitle}</h3>
+            <p>{content.description}</p>
           </div>
         ))}
       </div>
