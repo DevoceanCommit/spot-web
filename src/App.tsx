@@ -48,8 +48,8 @@ const App: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-5">
-      <header className="flex items-center mb-4">
-        <button onClick={() => window.history.back()} className="mr-3">
+      <header className="flex items-center mb-2">
+        <button onClick={() => window.history.back()} className="text-2xl bg-none border-none cursor-pointer mr-3">
           <img src={icon_back} alt="Back" />
         </button>
         <h1 className="text-lg font-bold">Video Summary</h1>
@@ -68,21 +68,21 @@ const App: React.FC = () => {
       </div>
       <div className="mb-5">
         <h1 className="text-2xl mb-1">{video.title}</h1>
-        <div className="flex justify-between text-sm text-gray-500">
+        <div className="flex justify-between items-center text-sm text-gray-500 mb-3">
           <span>{video.date}</span>
           <span className="cursor-pointer">🔖</span>
         </div>
-        <p className="text-base mt-3">{video.summary}</p>
+        <p className="text-base mb-5">{video.summary}</p>
       </div>
       <div className="mb-5">
-        <h2 className="text-xl mb-2">목차</h2>
+        <h2 className="text-lg mb-3">Table of Contents</h2>
         <ul className="list-none p-0">
           {video.contents.map((content, index) => (
-            <p key={index} className="mb-2">
+            <li key={index} className="mb-1">
               <a href={`#section-${index + 1}`} className="text-blue-500 hover:underline">
                 {content.subtitle}
               </a>
-            </p>
+            </li>
           ))}
         </ul>
       </div>
@@ -90,7 +90,7 @@ const App: React.FC = () => {
         {video.contents.map((content, index) => (
           <div key={index} id={`section-${index + 1}`} className="mb-10">
             <img src={content.screenshot} alt={content.subtitle} className="w-full h-auto mb-3" />
-            <h3 className="text-xl mb-2">{content.subtitle}</h3>
+            <h3 className="text-xl mb-1">{content.subtitle}</h3>
             <p className="text-base">{content.description}</p>
           </div>
         ))}
