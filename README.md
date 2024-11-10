@@ -1,24 +1,3 @@
-# 데보션 영 안드로이드 웹뷰 화면
-## 사용한 기술
-table of contents
+# SPOT Call for seniors
 
-
-embedding video
-
-
-tailwind css
-
-
-post css
-
-
-react
-
-
-typescript
-
-
-
-## 사용해보고 싶은 기술
-- [ ] skeleton ui
-- [ ] 로딩 순서 await
+![Group 3](https://github.com/user-attachments/assets/4edd52da-afcd-412b-af2f-1bc22e6b5a22)
