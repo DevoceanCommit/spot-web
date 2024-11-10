@@ -6,20 +6,25 @@ const SensorData = () => {
     <div className="flex justify-around w-full text-center mt-4">
       <div>
         <div>온도/습도</div>
-        <div>27°C</div>
-        <div>습함</div>
+        <div>
+          {temperature.out}°C{temperature.in}°C
+        </div>
+        <div>
+          {humidity.out}
+          {humidity.in}
+        </div>
       </div>
       <div>
         <div>움직임</div>
-        <div>적음</div>
+        <div>{movement}</div>
       </div>
       <div>
-        <div>공기질</div>
-        <div>27°C</div>
+        <div>가스유출</div>
+        <div>{gas}</div>
       </div>
       <div>
         <div>소음</div>
-        <div>27°C</div>
+        <div>{sound}</div>
       </div>
     </div>
   );
