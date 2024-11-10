@@ -13,7 +13,7 @@
   ],
   "license": "Unlicense",
   "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "typings": "./dist/index.d.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "tsc --outDir dist/ && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepublishOnly": "npm run build"

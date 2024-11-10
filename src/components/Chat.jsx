@@ -1,7 +1,7 @@
-// Chat.tsx
+// Chat.jsx
 import React from "react";
 
-const Chat: React.FC = () => {
+const Chat = () => {
   return (
     <div className="bg-gray-100 rounded-lg p-4 mt-4 w-full max-w-md">
       <div className="flex flex-col space-y-2">

@@ -1,7 +1,7 @@
-// SensorData.tsx
+// SensorData.jsx
 import React from "react";
 
-const SensorData: React.FC = () => {
+const SensorData = () => {
   return (
     <div className="flex justify-around w-full text-center mt-4">
       <div>
