@@ -1,9 +1,23 @@
+// App.tsx
 import React from "react";
+import Face from "./components/Face";
+import SensorData from "./components/SensorData";
+import Chat from "./components/Chat";
+
+import "./index.css";
 
 const App: React.FC = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold">Hello World!</h1>
+    <div className="flex items-center justify-center min-h-screen min-w-full bg-white">
+      <div className="flex flex-row justify-between p-4 h-[90%] w-[90%] max-w-5xl">
+        <div className="flex flex-col items-center justify-center w-1/2">
+          <Face />
+          <SensorData />
+        </div>
+        <div className="w-1/2">
+          <Chat />
+        </div>
+      </div>
     </div>
   );
 };
