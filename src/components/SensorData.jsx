@@ -24,7 +24,7 @@ const SensorData = () => {
       });
     } catch (error) {
       console.error("센서 데이터 가져오기 오류:", error);
-      setError("센서 데이터를 불러올 수 없습니다."); // 화면에 표시될 에러 메시지
+      setError("안녕하세요, 오늘도 좋은 하루 되세요"); // 화면에 표시될 에러 메시지
     }
   };
 
