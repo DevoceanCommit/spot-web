@@ -1,37 +1,50 @@
-// Chat.jsx
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const recognition = useRef(null);
   const [isListening, setIsListening] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
 
-  // 컴포넌트가 마운트될 때 SpeechRecognition 설정
+  useEffect(() => {
+    // 세션 ID가 없을 경우에만 생성
+    const initializeSession = async () => {
+      if (!sessionId) {
+        try {
+          const sessionResponse = await axios.get("/api/chat");
+          setSessionId(sessionResponse.data.session_id);
+          console.log("새로운 세션 ID:", sessionResponse.data.session_id);
+        } catch (error) {
+          console.error("세션 생성 오류:", error);
+        }
+      }
+    };
+    initializeSession();
+  }, [sessionId]);
+
   if (!recognition.current) {
     recognition.current = new (window.SpeechRecognition ||
       window.webkitSpeechRecognition)();
     recognition.current.lang = "ko-KR";
 
     recognition.current.onstart = () => {
-      console.log("음성 인식 시작");
       document.getElementById("micButton").classList.add("pulse");
       setIsListening(true);
     };
 
     recognition.current.onend = () => {
-      console.log("음성 인식 종료");
       document.getElementById("micButton").classList.remove("pulse");
       setIsListening(false);
     };
 
-    recognition.current.onresult = (event) => {
+    recognition.current.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
-      console.log("음성 인식 결과:", transcript); // 인식된 텍스트 로그 출력
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: transcript, sender: "me" },
-        { text: "음성 인식이 잘 되었습니다", sender: "other" },
-      ]);
+      console.log("음성 인식 결과:", transcript);
+      // 화면에 인식된 텍스트 표시
+      setMessages((prev) => [...prev, { text: transcript, sender: "me" }]);
+      // 서버로 메시지 전송
+      await sendMessage(transcript);
     };
   }
 
@@ -39,6 +52,28 @@ const Chat = () => {
   const startListening = () => {
     if (!isListening) {
       recognition.current.start();
+    }
+  };
+
+  // 서버에 메시지 전송 함수
+  const sendMessage = async (content) => {
+    if (!sessionId) return; // 세션 ID가 없으면 메시지 전송하지 않음
+
+    try {
+      const userMessage = {
+        idx: messages.length,
+        session_id: sessionId,
+        end: false,
+        type: "user",
+        content,
+      };
+
+      const response = await axios.post("/api/chat", userMessage);
+      const aiResponse = response.data.content;
+      // AI 응답을 화면에 표시
+      setMessages((prev) => [...prev, { text: aiResponse, sender: "other" }]);
+    } catch (error) {
+      console.error("메시지 전송 오류:", error);
     }
   };
 
