@@ -8,11 +8,11 @@ import "./index.css";
 
 const App = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-y-20 min-h-screen min-w-full bg-white font-bold">
       <span className="flex items-center font-bold text-4xl justify-center mt-10 font-col text-pink-300 ">
         시니어를 위한 AI 동반자, SPOT CALL
       </span>
-      <div className="flex items-center  min-h-screen min-w-full bg-white font-bold">
+      <div>
         <div className="flex flex-row justify-between p-4 h-[90%] w-[90%] max-w-5xl">
           <div className="flex flex-col items-center justify-center w-1/2">
             <Face />
