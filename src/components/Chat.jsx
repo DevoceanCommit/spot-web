@@ -100,7 +100,7 @@ const Chat = () => {
       <div className="mt-4 flex justify-center">
         <button
           id="micButton"
-          className="bg-pink-300 text-white p-4 rounded-full flex items-center justify-center"
+          className="bg-pink-300 text-white p-4 rounded-full flex items-center justify-center w-3 h-3"
           onClick={startListening}
         >
           🎤
