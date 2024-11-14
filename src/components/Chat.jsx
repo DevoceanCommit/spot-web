@@ -101,6 +101,7 @@ const Chat = () => {
       ]);
 
       // idx 증가
+
       setIdx((prevIdx) => prevIdx + 1);
 
       // 세션 종료 조건
