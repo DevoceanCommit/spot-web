@@ -1,5 +1,7 @@
 {
   "name": "spot-web",
+  "proxy": "http://203.250.148.52:48003",
+
   "version": "1.0.0",
   "private": true,
   "description": "OpenAPI client for ",

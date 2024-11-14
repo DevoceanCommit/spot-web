@@ -12,9 +12,12 @@ const Chat = () => {
     const initializeSession = async () => {
       if (!sessionId) {
         try {
-          const sessionResponse = await axios.get("/api/chat");
-          setSessionId(sessionResponse.data.session_id);
-          console.log("새로운 세션 ID:", sessionResponse.data.session_id);
+          const sessionResponse = await axios.get(
+            "http://203.250.148.52:48003/api/chat"
+          );
+          const newSessionId = sessionResponse.data; // 세션 ID가 응답으로 반환되는 경우
+          setSessionId(newSessionId);
+          console.log("새로운 세션 ID:", newSessionId);
         } catch (error) {
           console.error("세션 생성 오류:", error);
         }
@@ -48,29 +51,36 @@ const Chat = () => {
     };
   }
 
-  // 음성 인식 시작 함수
   const startListening = () => {
     if (!isListening) {
       recognition.current.start();
     }
   };
 
-  // 서버에 메시지 전송 함수
   const sendMessage = async (content) => {
     if (!sessionId) return; // 세션 ID가 없으면 메시지 전송하지 않음
 
     try {
       const userMessage = {
-        idx: messages.length,
         session_id: sessionId,
-        end: false,
+        idx: messages.length, // 메시지 인덱스
         type: "user",
-        content,
+        end: false,
+        content: content,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       };
 
-      const response = await axios.post("/api/chat", userMessage);
-      const aiResponse = response.data.content;
+      console.log("전송할 메시지 데이터:", userMessage);
+
+      const response = await axios.post(
+        "http://203.250.148.52:48003/api/chat",
+        userMessage
+      );
+      console.log("서버 응답:", response.data);
+
       // AI 응답을 화면에 표시
+      const aiResponse = response.data.content; // AI 응답 메시지
       setMessages((prev) => [...prev, { text: aiResponse, sender: "other" }]);
     } catch (error) {
       console.error("메시지 전송 오류:", error);
