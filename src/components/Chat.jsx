@@ -7,24 +7,28 @@ const Chat = () => {
   const [isListening, setIsListening] = useState(false);
   const [sessionId, setSessionId] = useState(null);
 
-  useEffect(() => {
-    // 세션 ID가 없을 경우에만 생성
-    const initializeSession = async () => {
-      if (!sessionId) {
-        try {
-          const sessionResponse = await axios.get(
-            "http://203.250.148.52:48003/api/chat"
-          );
-          const newSessionId = sessionResponse.data; // 세션 ID가 응답으로 반환되는 경우
-          setSessionId(newSessionId);
-          console.log("새로운 세션 ID:", newSessionId);
-        } catch (error) {
-          console.error("세션 생성 오류:", error);
-        }
-      }
-    };
-    initializeSession();
-  }, [sessionId]);
+  const initializeSession = async () => {
+    try {
+      const sessionResponse = await axios.get(
+        "http://203.250.148.52:48003/api/chat"
+      );
+      const newSessionId = sessionResponse.data.session_id;
+      setSessionId(newSessionId);
+      console.log("새로운 세션 ID:", newSessionId);
+    } catch (error) {
+      console.error("세션 생성 오류:", error);
+    }
+  };
+
+  const handleResult = async (transcript) => {
+    if (!sessionId) {
+      await initializeSession();
+    }
+
+    if (sessionId) {
+      await sendMessage(transcript, sessionId);
+    }
+  };
 
   if (!recognition.current) {
     recognition.current = new (window.SpeechRecognition ||
@@ -44,10 +48,8 @@ const Chat = () => {
     recognition.current.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
       console.log("음성 인식 결과:", transcript);
-      // 화면에 인식된 텍스트 표시
       setMessages((prev) => [...prev, { text: transcript, sender: "me" }]);
-      // 서버로 메시지 전송
-      await sendMessage(transcript);
+      await handleResult(transcript);
     };
   }
 
@@ -57,13 +59,11 @@ const Chat = () => {
     }
   };
 
-  const sendMessage = async (content) => {
-    if (!sessionId) return; // 세션 ID가 없으면 메시지 전송하지 않음
-
+  const sendMessage = async (content, currentSessionId) => {
     try {
       const userMessage = {
-        session_id: sessionId,
-        idx: messages.length, // 메시지 인덱스
+        session_id: currentSessionId,
+        idx: messages.length,
         type: "user",
         end: false,
         content: content,
@@ -77,18 +77,28 @@ const Chat = () => {
         "http://203.250.148.52:48003/api/chat",
         userMessage
       );
-      console.log("서버 응답:", response.data);
+      const aiMessage = response.data;
+      console.log("서버 응답:", aiMessage);
 
-      // AI 응답을 화면에 표시
-      const aiResponse = response.data.content; // AI 응답 메시지
-      setMessages((prev) => [...prev, { text: aiResponse, sender: "other" }]);
+      setMessages((prev) => [
+        ...prev,
+        { text: aiMessage.content, sender: "other" },
+      ]);
+
+      if (aiMessage.end === true) {
+        console.log("세션 종료됨");
+        setSessionId(null);
+      }
     } catch (error) {
       console.error("메시지 전송 오류:", error);
     }
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg p-4 mt-4 w-full max-w-md h-30">
+    <div
+      className="bg-gray-100 rounded-lg p-4 mt-4 h-30"
+      style={{ height: "220px" }}
+    >
       <div className="flex flex-col space-y-2">
         {messages.map((message, index) => (
           <div
