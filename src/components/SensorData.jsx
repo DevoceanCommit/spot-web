@@ -45,30 +45,44 @@ const SensorData = () => {
         <div>{error}</div> // 오류 메시지 출력
       ) : (
         <>
-          <div>
-            <div>온도/습도</div>
-            <div>
-              {sensorData.temperature.out}°C / {sensorData.temperature.in}°C
+          <div className="flex flex-row flex-wrap bg-pink-300 p-6 rounded-2xl shadow-lg space-x-4 space-y-4">
+            <div className="bg-white p-6 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-200 transform hover:-translate-y-1 flex-grow">
+              <h2 className="text-lg font-medium text-gray-900 mb-1">온도</h2>
+              <p className="text-gray-600 text-sm">
+                실외: {sensorData.temperature.out}°C <br /> 실내:{" "}
+                {sensorData.temperature.in}°C
+              </p>
             </div>
-            <div>
-              습도: {sensorData.humidity.out}% / {sensorData.humidity.in}%
+
+            <div className="bg-white p-6 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-200 transform hover:-translate-y-1 flex-grow">
+              <h2 className="text-lg font-medium text-gray-900 mb-1">습도</h2>
+              <p className="text-gray-600 text-sm">
+                실외: {sensorData.humidity.out}% <br /> 실내:{" "}
+                {sensorData.humidity.in}%
+              </p>
             </div>
-          </div>
-          <div>
-            <div>움직임</div>
-            <div>{sensorData.movement}</div>
-          </div>
-          <div>
-            <div>가스유출</div>
-            <div>{sensorData.gas}</div>
-          </div>
-          <div>
-            <div>소음 상태</div>
-            <div>{sensorData.sound}</div>
-          </div>
-          <div>
-            <div>소음 레벨 (실내)</div>
-            <div>{sensorData.sound_in}</div>
+
+            <div className="bg-white p-6 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-200 transform hover:-translate-y-1 flex-grow">
+              <h2 className="text-lg font-medium text-gray-900 mb-1">움직임</h2>
+              <p className="text-gray-600 text-sm">{sensorData.movement}</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-200 transform hover:-translate-y-1 flex-grow">
+              <h2 className="text-lg font-medium text-gray-900 mb-1">
+                가스유출
+              </h2>
+              <p className="text-gray-600 text-sm">{sensorData.gas}</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-full shadow-lg hover:shadow-2xl transition-shadow duration-200 transform hover:-translate-y-1 flex-grow">
+              <h2 className="text-lg font-medium text-gray-900 mb-1">
+                실내 소음
+              </h2>
+              <p className="text-gray-600 text-sm">
+                {sensorData.sound}
+                <br />({sensorData.sound_in} 데시벨)
+              </p>
+            </div>
           </div>
         </>
       )}
