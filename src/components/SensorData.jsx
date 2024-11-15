@@ -30,7 +30,7 @@ const SensorData = () => {
 
       console.log("성공", latestData);
     } catch (error) {
-      console.error("센서 데이터 가져오기 오류:", error);
+      console.error("안녕하세요, 오늘도 좋은 하루 보내세요", error);
       setError("센서 데이터를 불러올 수 없습니다.");
     }
   };
