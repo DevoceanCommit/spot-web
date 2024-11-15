@@ -19,3 +19,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* 오른쪽 말풍선 */
+.bubble-right {
+  background-color: #fbb6ce; /* 핑크 색상 */
+  color: white;
+  position: relative;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.bubble-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -10px; /* 말풍선의 끝 위치 */
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid #fbb6ce; /* 말풍선의 색상과 일치 */
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+/* 왼쪽 말풍선 */
+.bubble-left {
+  background-color: #ffffff; /* 흰색 */
+  color: black;
+  position: relative;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.bubble-left::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px; /* 말풍선의 끝 위치 */
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-right: 10px solid #ffffff; /* 말풍선의 색상과 일치 */
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}

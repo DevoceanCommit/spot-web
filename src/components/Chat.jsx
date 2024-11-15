@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+/* import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const Chat = () => {
@@ -148,6 +148,91 @@ const Chat = () => {
           id="micButton"
           className="bg-pink-300 text-white p-2 rounded-full flex items-center justify-center"
           onClick={startListening}
+        >
+          <img src="/assets/mic.png" alt="mic" style={{ width: "25px" }} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Chat;
+*/
+
+import React, { useState, useEffect } from "react";
+
+const Chat = () => {
+  const [messages, setMessages] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const predefinedResponses = [
+    { text: "안녕하세요 오늘 외출 계획이 있으신가요?", sender: "other" },
+    { text: "응, 친구들이랑 밖에 나가려고", sender: "me" },
+    {
+      text: "오늘 바깥 기온이 13도에요, 외출할때 따뜻하게 챙겨입고 나가세요.",
+      sender: "other",
+    },
+    { text: "그래 고맙다", sender: "me" },
+    { text: "어제 잠은 푹 주무셨나요?", sender: "other" },
+    { text: "응 안 깨고 푹 잤다", sender: "me" },
+    {
+      text: "잘 주무셨다니 다행이네요. 요즘 기분은 어떠세요? 우울하거나 기분이 안 좋지는 않으세요?",
+      sender: "other",
+    },
+    { text: "요즘 집에 혼자 있는 시간이 많아서 우울하네", sender: "me" },
+    {
+      text: "가벼운 산책과 외출은 기분 전환에 큰 도움이 된답니다. 주변 산책로를 검색해드릴까요?",
+      sender: "other",
+    },
+    { text: "아니야 괜찮아 집 앞 공원 산책 하고 오마", sender: "me" },
+    {
+      text: "알겠습니다. 언제든 도움이 필요하시면 저를 찾아주세요.\n \n대화가 종료되었습니다.",
+      sender: "other",
+    },
+  ];
+
+  useEffect(() => {
+    if (currentIndex < predefinedResponses.length) {
+      const timer = setTimeout(() => {
+        setMessages((prev) => [...prev, predefinedResponses[currentIndex]]);
+        setCurrentIndex((prev) => prev + 1);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex]);
+
+  return (
+    <div
+      className="bg-gray-100 rounded-lg p-4 mt-4 w-full max-w-md relative"
+      style={{ height: "300px", overflowY: "auto" }}
+    >
+      <div className="flex flex-col space-y-2">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`flex ${
+              message.sender === "me" ? "justify-end" : "justify-start"
+            }`}
+          >
+            <div
+              className={`${
+                message.sender === "me" ? "bubble-right" : "bubble-left"
+              } rounded-xl p-2 max-w-[80%] break-words`}
+              style={{ whiteSpace: "pre-wrap" }} // 줄 바꿈 적용
+            >
+              {message.text}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="w-full flex justify-center p-4">
+        <button
+          id="micButton"
+          className="bg-pink-300 text-white p-2 rounded-full flex items-center justify-center"
+          onClick={() =>
+            console.log("음성 인식 기능이 현재 비활성화 상태입니다.")
+          }
         >
           <img src="/assets/mic.png" alt="mic" style={{ width: "25px" }} />
         </button>
